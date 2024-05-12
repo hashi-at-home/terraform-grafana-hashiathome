@@ -1,8 +1,16 @@
 # variables.tf
-# Use this file to declare the variables that the module will use.
+variable "stack" {
+  description = "Cloud Stack configuration"
+  type = object({
+    region = string
+    name   = string
+    slug   = string
+  })
 
-# A dummy variable is provided to force a test validation
-variable "dummy" {
-  type        = string
-  description = "dummy variable"
+  default = {
+    name   = "hashiathome.grafana.net"
+    region = "prod-eu-west-2"
+    slug   = "hashiathome"
+  }
+
 }

@@ -17,10 +17,13 @@ These examples show how to use the module in your project, and are also use for 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >1.2.0 |
+| <a name="requirement_grafana"></a> [grafana](#requirement\_grafana) | ~> 2 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 2.19.0 |
 
 ## Modules
 
@@ -28,13 +31,16 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [grafana_dashboard.nodes](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/dashboard) | resource |
+| [grafana_folder.hah](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/folder) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_dummy"></a> [dummy](#input\_dummy) | dummy variable | `string` | n/a | yes |
+| <a name="input_stack"></a> [stack](#input\_stack) | Cloud Stack configuration | <pre>object({<br>    region = string<br>    name   = string<br>    slug   = string<br>  })</pre> | <pre>{<br>  "name": "hashiathome.grafana.net",<br>  "region": "prod-eu-west-2",<br>  "slug": "hashiathome"<br>}</pre> | no |
 
 ## Outputs
 

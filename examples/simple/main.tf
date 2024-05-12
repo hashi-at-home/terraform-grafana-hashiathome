@@ -1,21 +1,46 @@
-# This is the default example
-# customise it as you see fit for your example usage of your module
+terraform {
+  required_version = ">1.2.0"
+  required_providers {
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 2"
+    }
+  }
+}
 
-# add provider configurations here, for example:
-# provider "aws" {
-#
-# }
+variable "vault_mount" {
+  type        = string
+  description = "Name of the mount in Vault where we store API tokens"
+  default     = "hashiatho.me-v2"
+}
+
+variable "grafana_secret_name" {
+  type        = string
+  description = "Name of the secret in the KV-v2 mount containing API tokens"
+  default     = "grafana_cloud"
+}
+
+# We will use vault in this example to retrieve API tokens
+provider "vault" {}
+
+data "vault_kv_secret_v2" "name" {
+  mount = var.vault_mount
+  name  = var.grafana_secret_name
+}
+
+provider "grafana" {
+  cloud_access_policy_token = data.vault_kv_secret_v2.name.data.cloud_access_policy_token
+}
 
 # Declare your backends and other terraform configuration here
 # This is an example for using the consul backend.
-# terraform {
-#   backend "consul" {
-#     path = "test_module/simple"
-#   }
-# }
+terraform {
+  backend "consul" {
+    path = "terraform/grafana/env-test/simple"
+  }
+}
 
 
 module "example" {
   source = "../../"
-  dummy  = "test"
 }

@@ -17,6 +17,7 @@ These examples show how to use the module in your project, and are also use for 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >1.2.0 |
+| <a name="requirement_grafana"></a> [grafana](#requirement\_grafana) | ~> 2 |
 
 ## Providers
 
@@ -32,9 +33,7 @@ No resources.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_dummy"></a> [dummy](#input\_dummy) | dummy variable | `string` | n/a | yes |
+No inputs.
 
 ## Outputs
 

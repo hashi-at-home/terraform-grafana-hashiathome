@@ -23,13 +23,14 @@ variable "grafana_secret_name" {
 # We will use vault in this example to retrieve API tokens
 provider "vault" {}
 
-data "vault_kv_secret_v2" "name" {
+data "vault_kv_secret_v2" "grafana" {
   mount = var.vault_mount
   name  = var.grafana_secret_name
 }
 
 provider "grafana" {
-  cloud_access_policy_token = data.vault_kv_secret_v2.name.data.cloud_access_policy_token
+  auth                      = data.vault_kv_secret_v2.grafana.data.terraform_api_key
+  cloud_access_policy_token = data.vault_kv_secret_v2.grafana.data.cloud_access_policy_token
 }
 
 # Declare your backends and other terraform configuration here

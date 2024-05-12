@@ -21,7 +21,9 @@ These examples show how to use the module in your project, and are also use for 
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_grafana"></a> [grafana](#provider\_grafana) | 2.19.0 |
 
 ## Modules
 
@@ -29,11 +31,15 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [grafana_cloud_stack.hah](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/cloud_stack) | resource |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_stack"></a> [stack](#input\_stack) | Cloud Stack configuration | <pre>object({<br>    region = string<br>    name   = string<br>    slug   = string<br>  })</pre> | <pre>{<br>  "name": "hashiathome.grafana.net",<br>  "region": "prod-eu-west-2",<br>  "slug": "hashiathome"<br>}</pre> | no |
 
 ## Outputs
 

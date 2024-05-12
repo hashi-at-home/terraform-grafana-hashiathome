@@ -1,8 +1,11 @@
 # Main definition
 
-# Create a cloud stack
-resource "grafana_cloud_stack" "hah" {
-  name        = var.stack.name
-  slug        = var.stack.slug
-  region_slug = var.stack.region
+# Create HAH folder
+resource "grafana_folder" "hah" {
+  title = "Hashi@Home"
+}
+
+resource "grafana_dashboard" "nodes" {
+  config_json = file("${path.module}/dashboards/nodes.json")
+  folder      = grafana_folder.hah.id
 }

@@ -6,6 +6,9 @@ terraform {
       version = "~> 2"
     }
   }
+  backend "consul" {
+    path = "terraform/grafana/env-test/simple"
+  }
 }
 
 variable "vault_mount" {
@@ -28,20 +31,43 @@ data "vault_kv_secret_v2" "grafana" {
   name  = var.grafana_secret_name
 }
 
+# Create the cloud provider to interact with stacks
 provider "grafana" {
-  auth                      = data.vault_kv_secret_v2.grafana.data.terraform_api_key
+  alias                     = "cloud"
   cloud_access_policy_token = data.vault_kv_secret_v2.grafana.data.cloud_access_policy_token
 }
 
-# Declare your backends and other terraform configuration here
-# This is an example for using the consul backend.
-terraform {
-  backend "consul" {
-    path = "terraform/grafana/env-test/simple"
-  }
+data "grafana_cloud_stack" "hah" {
+  provider = grafana.cloud
+  slug     = "hashiathome"
 }
 
+resource "grafana_cloud_stack_service_account" "cloud_sa" {
+  provider    = grafana.cloud
+  name        = "terraform"
+  role        = "Admin"
+  stack_slug  = data.grafana_cloud_stack.hah.slug
+  is_disabled = false
+}
+
+resource "grafana_cloud_stack_service_account_token" "cloud_sa" {
+  provider           = grafana.cloud
+  stack_slug         = "hashiathome"
+  name               = "Terraform SA Key"
+  service_account_id = grafana_cloud_stack_service_account.cloud_sa.id
+}
+
+# Create the stack provider to interact with the stack selected.
+provider "grafana" {
+  alias = "stack"
+  url   = "https://hashiathome.grafana.net"
+  auth  = grafana_cloud_stack_service_account_token.cloud_sa.key
+}
 
 module "example" {
+  # Use the stack provider to create grafana app objects
+  providers = {
+    grafana = grafana.stack
+  }
   source = "../../"
 }

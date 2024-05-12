@@ -33,7 +33,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [grafana_cloud_stack.hah](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/cloud_stack) | resource |
+| [grafana_dashboard.nodes](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/dashboard) | resource |
+| [grafana_folder.hah](https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/folder) | resource |
 
 ## Inputs
 
